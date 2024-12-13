@@ -51,6 +51,7 @@ class _CustomButtonState extends State<CustomButton> {
 
                 if (widget.pageName == AppStrings.login) {
                   try {
+                    AppStrings.displayName = AppStrings.userName.replaceAll("@gmail.com", "");
                     final credential =
                         await FirebaseAuth.instance.signInWithEmailAndPassword(
                       email: AppStrings.userName,
@@ -77,8 +78,8 @@ class _CustomButtonState extends State<CustomButton> {
                       email: AppStrings.userName,
                       password: AppStrings.userPassword,
                     );
-                    Navigator.pop(
-                        context); // Pop the current register screen and go back to the login screen
+                    Navigator.pushNamed(
+                        context, AppRoutes.welcome); // Navigate to welcome page
                   } on FirebaseAuthException catch (e) {
                     String errorMessage =
                         "An error occurred, please try again.";

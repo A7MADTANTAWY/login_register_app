@@ -14,7 +14,7 @@ class AppRoutes {
     return {
       login: (context) => const LoginPage(),
       register: (context) => const RegisterPage(),
-      welcome: (context) => const WelcomePage(),
+      welcome: (context) => WelcomePage(),
       getStarted: (context) => GetStartedPage(),
     };
   }
