@@ -15,7 +15,7 @@ class LoginRegister extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.login, // Default route
+      initialRoute: AppRoutes.getStarted, // Default route
       routes: AppRoutes.getRoutes(), // Add routes here
     );
   }

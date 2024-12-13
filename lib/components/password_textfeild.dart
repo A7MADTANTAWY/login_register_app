@@ -11,36 +11,20 @@ class PasswordTextfeild extends StatefulWidget {
 
 class _PasswordTextfeildState extends State<PasswordTextfeild> {
   final TextEditingController _passwordController = TextEditingController();
-  String _errorMessage = ''; // To hold error message for validation
+  String _helperMessage = ''; // To hold helper message for validation
   bool _isPasswordVisible = false; // Variable to track password visibility
 
-  // Function to validate password
-  String? _validatePassword(String value) {
+  // Function to validate password and update helper message
+  void _validatePassword(String value) {
     if (value.isEmpty) {
-      return 'Password cannot be empty';
+      _helperMessage = 'Password cannot be empty';
     } else if (value.length < 6) {
-      return 'Password must be at least 6 characters';
-    } else if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return 'Password must contain at least one number';
-    } else if (!RegExp(r'[A-Za-z]').hasMatch(value)) {
-      return 'Password must contain at least one letter';
-    } else if (!RegExp(r'[@$!%*?&]').hasMatch(value)) {
-      return 'Password must contain at least one special character';
+      _helperMessage = 'Password must be at least 6 digits';
+    } else if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+      _helperMessage = 'Password must contain only numbers';
+    } else {
+      _helperMessage = ''; // Clear the helper message when valid
     }
-    return null; // No error
-  }
-
-  // Function to clear the text field
-  void clearPasswordField() {
-    _passwordController.clear();
-    setState(() {
-      _errorMessage = ''; // Clear any error message
-    });
-  }
-
-  // Function to be called after successful login or registration
-  void handleSuccessfulLoginOrRegister() {
-    clearPasswordField();
   }
 
   @override
@@ -48,48 +32,66 @@ class _PasswordTextfeildState extends State<PasswordTextfeild> {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: TextField(
-          controller: _passwordController, // Set the controller for the field
-          onChanged: (data) {
-            AppStrings.userPassword = data; // Store password in AppStrings
-            setState(() {
-              _errorMessage =
-                  _validatePassword(data) ?? ''; // Update error message
-            });
-          },
-          obscureText: !_isPasswordVisible, // Toggle password visibility
-          decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.lock, color: AppColors.darkBlue),
-            labelText: 'Password',
-            labelStyle: const TextStyle(color: AppColors.darkBlue),
-            filled: true,
-            fillColor: Colors.grey[100],
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.0),
-              borderSide: const BorderSide(color: AppColors.darkBlue),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.0),
-              borderSide:
-                  const BorderSide(color: AppColors.darkBlue, width: 2.0),
-            ),
-            errorText: _errorMessage.isEmpty
-                ? null
-                : _errorMessage, // Show error message
-            suffixIcon: IconButton(
-              icon: Icon(
-                _isPasswordVisible
-                    ? Icons.visibility
-                    : Icons.visibility_off, // Change icon based on visibility
-                color: AppColors.darkBlue,
-              ),
-              onPressed: () {
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller:
+                  _passwordController, // Set the controller for the field
+              onChanged: (data) {
+                AppStrings.userPassword = data; // Store password in AppStrings
                 setState(() {
-                  _isPasswordVisible = !_isPasswordVisible; // Toggle visibility
+                  _validatePassword(data); // Update helper message
                 });
               },
+              obscureText: !_isPasswordVisible, // Toggle password visibility
+              keyboardType:
+                  TextInputType.number, // Set the keyboard to number only
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.lock, color: AppColors.darkBlue),
+                labelText: 'Password',
+                labelStyle: const TextStyle(color: AppColors.darkBlue),
+                filled: true,
+                fillColor: Colors.grey[100],
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(color: AppColors.darkBlue),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide:
+                      const BorderSide(color: AppColors.darkBlue, width: 2.0),
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isPasswordVisible
+                        ? Icons.visibility
+                        : Icons
+                            .visibility_off, // Change icon based on visibility
+                    color: AppColors.darkBlue,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible =
+                          !_isPasswordVisible; // Toggle visibility
+                    });
+                  },
+                ),
+              ),
             ),
-          ),
+            if (_helperMessage
+                .isNotEmpty) // Display helper message if not empty
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  _helperMessage,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );

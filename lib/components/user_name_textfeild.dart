@@ -11,76 +11,72 @@ class UserNameTextfeild extends StatefulWidget {
 
 class _UserNameTextfeildState extends State<UserNameTextfeild> {
   final TextEditingController _userNameController = TextEditingController();
-  String _errorMessage = ''; // To hold error message for validation
+  String _helperMessage = ''; // To hold helper message for validation
 
-  // Function to validate username (email in this case)
-  String? _validateUserName(String value) {
+  // Function to validate username (email in this case) and update helper message
+  void _validateUserName(String value) {
     if (value.isEmpty) {
-      return 'Username cannot be empty';
+      _helperMessage = 'Username cannot be empty';
     } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+\.[a-zA-Z]{2,7}$')
         .hasMatch(value)) {
-      return 'Please enter a valid email address';
+      _helperMessage = 'Please enter a valid email address';
+    } else {
+      _helperMessage = ''; // Clear the helper message when valid
     }
-    return null; // No error
-  }
-
-  // Function to clear the text field
-  void clearUserNameField() {
-    _userNameController.clear();
-    setState(() {
-      _errorMessage = ''; // Clear error message
-    });
-  }
-
-  // Example function for login or registration logic
-  void _handleLoginOrRegister() {
-    // Perform your login or registration logic here
-    // If successful, clear the username field
-    clearUserNameField();
   }
 
   @override
   Widget build(BuildContext context) {
-    bool hasError = _errorMessage.isNotEmpty;
-
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: TextField(
-          controller: _userNameController, // Set the controller for the field
-          onChanged: (data) {
-            AppStrings.userName = data; // Store username in AppStrings
-            setState(() {
-              _errorMessage =
-                  _validateUserName(data) ?? ''; // Update error message
-            });
-          },
-          decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.person, color: AppColors.darkBlue),
-            labelText: 'Username',
-            labelStyle: const TextStyle(color: AppColors.darkBlue),
-            filled: true,
-            fillColor: Colors.white,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.0),
-              borderSide: BorderSide(
-                color:
-                    hasError ? Colors.red : AppColors.darkBlue, // Red if error
-                width: 2.0, // Adjust border width
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller:
+                  _userNameController, // Set the controller for the field
+              onChanged: (data) {
+                AppStrings.userName = data; // Store username in AppStrings
+                setState(() {
+                  _validateUserName(data); // Update helper message
+                });
+              },
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.person, color: AppColors.darkBlue),
+                labelText: 'Username',
+                labelStyle: const TextStyle(color: AppColors.darkBlue),
+                filled: true,
+                fillColor: Colors.white,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(
+                    color: AppColors.darkBlue, // Border color
+                    width: 2.0, // Border width
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(
+                    color: AppColors.darkBlue, // Border color
+                    width: 2.0, // Border width
+                  ),
+                ),
               ),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.0),
-              borderSide: BorderSide(
-                color:
-                    hasError ? Colors.red : AppColors.darkBlue, // Red if error
-                width: 2.0, // Adjust border width
+            if (_helperMessage
+                .isNotEmpty) // Display helper message if not empty
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  _helperMessage,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 14,
+                  ),
+                ),
               ),
-            ),
-            errorText: _errorMessage.isEmpty
-                ? null
-                : _errorMessage, // Show error message
-          ),
+          ],
         ),
       ),
     );
