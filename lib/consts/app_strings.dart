@@ -36,5 +36,5 @@ class AppStrings {
 
   static String userName = '';
   static String userPassword = '';
-  static String displayName = '';
+  static String? displayName;
 }

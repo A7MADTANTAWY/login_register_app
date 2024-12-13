@@ -23,7 +23,7 @@ class _WelcomePageState extends State<WelcomePage> {
           const Text(
             'Welcome',
             style: TextStyle(
-              fontSize: 36.0,
+              fontSize: 40,
               fontWeight: FontWeight.bold,
               color: Colors.white, // Set text color to white
             ),
@@ -32,7 +32,7 @@ class _WelcomePageState extends State<WelcomePage> {
             height: 10,
           ),
           Text(
-            AppStrings.displayName,
+            AppStrings.displayName ?? AppStrings.userName,
             style: const TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,

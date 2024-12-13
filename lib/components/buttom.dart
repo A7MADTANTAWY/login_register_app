@@ -77,8 +77,8 @@ class _CustomButtonState extends State<CustomButton> {
                       email: AppStrings.userName,
                       password: AppStrings.userPassword,
                     );
-                    Navigator.pushNamed(
-                        context, AppRoutes.login); // Navigate to login page
+                    Navigator.pop(
+                        context); // Pop the current register screen and go back to the login screen
                   } on FirebaseAuthException catch (e) {
                     String errorMessage =
                         "An error occurred, please try again.";
