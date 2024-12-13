@@ -15,10 +15,10 @@ class GetStartedPage extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  "Welcome to Healthify",
+                  "Welcome to my medicine faster",
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: AppColors.darkBlue, // Adjusting title color
-                        fontSize: 28,
+                        fontSize: 26,
                       ),
                 ),
                 const SizedBox(height: 10),

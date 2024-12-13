@@ -32,7 +32,7 @@ class _WelcomePageState extends State<WelcomePage> {
             height: 10,
           ),
           Text(
-            AppStrings.userName,
+            AppStrings.displayName,
             style: const TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,

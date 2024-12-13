@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_register_page/components/buttom.dart';
+import 'package:login_register_page/components/name_textfeild.dart';
 import 'package:login_register_page/components/password_textfeild.dart';
 import 'package:login_register_page/components/swetch_buttom.dart';
 import 'package:login_register_page/components/upper_body.dart';
@@ -20,6 +21,9 @@ class RegisterPage extends StatelessWidget {
             subtitle: AppStrings.createYourAccount,
           ),
           const SizedBox(height: 30), // Space between fields
+
+          // In your RegisterPage (or any other page)
+          DisplayNameTextfeild(),
 
           UserNameTextfeild(),
 

@@ -3,7 +3,7 @@ import 'package:login_register_page/consts/app_colors.dart';
 import 'package:login_register_page/consts/app_strings.dart';
 
 class PasswordTextfeild extends StatefulWidget {
-  PasswordTextfeild({super.key});
+  const PasswordTextfeild({super.key});
 
   @override
   _PasswordTextfeildState createState() => _PasswordTextfeildState();
@@ -52,15 +52,20 @@ class _PasswordTextfeildState extends State<PasswordTextfeild> {
                 labelText: 'Password',
                 labelStyle: const TextStyle(color: AppColors.darkBlue),
                 filled: true,
-                fillColor: Colors.grey[100],
+                fillColor: Colors.white,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
-                  borderSide: const BorderSide(color: AppColors.darkBlue),
+                  borderSide: const BorderSide(
+                    color: AppColors.darkBlue, // Border color
+                    width: 2.0, // Border width
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
-                  borderSide:
-                      const BorderSide(color: AppColors.darkBlue, width: 2.0),
+                  borderSide: const BorderSide(
+                    color: AppColors.darkBlue, // Border color
+                    width: 2.0, // Border width
+                  ),
                 ),
                 suffixIcon: IconButton(
                   icon: Icon(
